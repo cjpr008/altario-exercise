@@ -241,11 +241,11 @@ export default {
   }
 
   .live-dot {
-    background-color: red; /* Color for live indicator */
+    background-color: red;
   }
 
   .not-live-dot {
-    background-color: gray; /* Color for not live indicator */
+    background-color: gray;
   }
 }
 .center-elements {
