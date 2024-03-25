@@ -8,6 +8,7 @@
           v-model="lowercaseInput"
           @keydown="validateInput"
           @keyup="sendInput"
+          @paste="preventPaste"
           :disabled="isSending"
           placeholder="Character"
         />
@@ -111,25 +112,22 @@ export default {
     },
 
     async validateInput(event) {
-      const charCode = event.keyCode;
-      const isBackspace = this.checkIfIsBackspace(charCode);
-      const isAlphabetical = this.checkIfIsAlphabetical(charCode);
+      const isBackspace = this.checkIfIsBackspace(event.keyCode);
+      const isAlphabetical = this.checkIfIsAlphabetical(event.key);
       const inputLength = this.inputText.length;
       if (this.inputText.length > 0) {
         this.inputTextAlreadyWasFilled = true;
       } else {
         this.inputTextAlreadyWasFilled = false;
       }
-
       if ((!isAlphabetical && inputLength === 0) || (inputLength === 1 && !isBackspace)) {
         event.preventDefault();
       }
     },
 
     async sendInput(event) {
-      const charCode = event.keyCode;
-      const isAlphabetical = this.checkIfIsAlphabetical(charCode);
-      const isBackspace = this.checkIfIsBackspace(charCode);
+      const isAlphabetical = this.checkIfIsAlphabetical(event.key);
+      const isBackspace = this.checkIfIsBackspace(event.keyCode);
       if (!isAlphabetical && !isBackspace) {
         return;
       }
@@ -161,11 +159,14 @@ export default {
         console.error('Error sendInput:', error);
       }
     },
-    checkIfIsAlphabetical(charCode) {
-      return (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122);
+    checkIfIsAlphabetical(char) {
+      return /^[a-zA-Z]+$/.test(char);
     },
     checkIfIsBackspace(charCode) {
       return charCode === 8;
+    },
+    preventPaste(event) {
+      event.preventDefault();
     },
   },
   mounted() {
