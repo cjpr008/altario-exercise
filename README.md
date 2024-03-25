@@ -26,4 +26,6 @@ To start the frontend process, follow these steps:
 
 ## Notes
 
+After the two projects are up, the Generator should be available on http://localhost:8080/ - The Vue should indicate the url after the npm run serve
+
 Inside the projects, you can find README.md files with more detailed information for each of those projects and frameworks.
