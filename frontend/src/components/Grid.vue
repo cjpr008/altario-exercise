@@ -113,7 +113,7 @@ export default {
 
     async validateInput(event) {
       const isBackspace = this.checkIfIsBackspace(event.keyCode);
-      const isAlphabetical = this.checkIfIsAlphabetical(event.key);
+      const isAlphabetical = this.checkIfIsAlphabetical(event.key, event.keyCode);
       const inputLength = this.inputText.length;
       if (this.inputText.length > 0) {
         this.inputTextAlreadyWasFilled = true;
@@ -126,12 +126,13 @@ export default {
     },
 
     async sendInput(event) {
-      const isAlphabetical = this.checkIfIsAlphabetical(event.key);
+      const isAlphabetical = this.checkIfIsAlphabetical(event.key, event.keyCode);
+      console.log('isAlphabetical', isAlphabetical);
       const isBackspace = this.checkIfIsBackspace(event.keyCode);
       if (!isAlphabetical && !isBackspace) {
         return;
       }
-
+      console.log('!isBackspace && !this.inputTextAlreadyWasFilled', !isBackspace, !this.inputTextAlreadyWasFilled);
       if (!isBackspace && !this.inputTextAlreadyWasFilled) {
         this.isSending = true;
       }
@@ -159,8 +160,8 @@ export default {
         console.error('Error sendInput:', error);
       }
     },
-    checkIfIsAlphabetical(char) {
-      return /^[a-zA-Z]+$/.test(char);
+    checkIfIsAlphabetical(char, code) {
+      return (/^[a-zA-Z]+$/.test(char) && code >= 65 && code <= 90) || (code >= 97 && code <= 122);
     },
     checkIfIsBackspace(charCode) {
       return charCode === 8;
