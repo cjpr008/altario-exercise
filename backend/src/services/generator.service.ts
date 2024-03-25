@@ -29,7 +29,7 @@ export class GeneratorService {
     }
   }
 
-  generateBiasMatrix(biasMatrix, biasCharacter) {
+  generateBiasMatrix(biasMatrix: string[][], biasCharacter: string) {
     const generateRandomPositions = this.generatePositions(20);
     for (let i = 0; i < generateRandomPositions.length; i++) {
       biasMatrix[generateRandomPositions[i][0]][generateRandomPositions[i][1]] =
@@ -37,7 +37,7 @@ export class GeneratorService {
     }
   }
 
-  countAlphabeticOccurrences(matrix, character): number {
+  countAlphabeticOccurrences(matrix: string[][], character: string): number {
     let count = 0;
     for (let row of matrix) {
       for (let char of row) {
@@ -49,7 +49,7 @@ export class GeneratorService {
     return count;
   }
 
-  handleLargeNumbers(number): number {
+  handleLargeNumbers(number: number): number {
     let newNumber = number;
     for (let i = 2; i <= number; i++) {
       const remainder = newNumber % i;
