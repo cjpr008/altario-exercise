@@ -57,7 +57,7 @@ export default {
       intervalId: null,
       turnOn: false,
       inputText: '',
-      inputTextAlreadyFilled: false,
+      inputTextAlreadyWasFilled: false,
       isSending: true,
       isLive: false,
     };
@@ -112,14 +112,13 @@ export default {
 
     async validateInput(event) {
       const charCode = event.keyCode;
-      const isBackspace = charCode === 8;
-      const isAlphabetical = (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122);
+      const isBackspace = this.checkIfIsBackspace(charCode);
+      const isAlphabetical = this.checkIfIsAlphabetical(charCode);
       const inputLength = this.inputText.length;
-
       if (this.inputText.length > 0) {
-        this.inputTextAlreadyFilled = true;
+        this.inputTextAlreadyWasFilled = true;
       } else {
-        this.inputTextAlreadyFilled = false;
+        this.inputTextAlreadyWasFilled = false;
       }
 
       if ((!isAlphabetical && inputLength === 0) || (inputLength === 1 && !isBackspace)) {
@@ -129,14 +128,15 @@ export default {
 
     async sendInput(event) {
       const charCode = event.keyCode;
-      const isAlphabetical = (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122);
-      const isBackspace = charCode === 8;
-
-      if ((!isAlphabetical && !isBackspace) || this.inputTextAlreadyFilled) {
+      const isAlphabetical = this.checkIfIsAlphabetical(charCode);
+      const isBackspace = this.checkIfIsBackspace(charCode);
+      if (!isAlphabetical && !isBackspace) {
         return;
       }
 
-      if (!isBackspace) this.isSending = true;
+      if (!isBackspace && !this.inputTextAlreadyWasFilled) {
+        this.isSending = true;
+      }
 
       setTimeout(() => {
         this.isSending = false;
@@ -160,6 +160,12 @@ export default {
       } catch (error) {
         console.error('Error sendInput:', error);
       }
+    },
+    checkIfIsAlphabetical(charCode) {
+      return (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122);
+    },
+    checkIfIsBackspace(charCode) {
+      return charCode === 8;
     },
   },
   mounted() {
