@@ -39,8 +39,8 @@ export class GeneratorService {
 
   countAlphabeticOccurrences(matrix: string[][], character: string): number {
     let count = 0;
-    for (let row of matrix) {
-      for (let char of row) {
+    for (const row of matrix) {
+      for (const char of row) {
         if (char === character) {
           count++;
         }
