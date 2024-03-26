@@ -4,7 +4,6 @@ import { GeneratorService } from './services/generator.service';
 @Controller()
 export class GeneratorController {
   constructor(private readonly generatorService: GeneratorService) {
-    this.currentMatrix = [];
     this.currentMatrix = this.generatorService.initMatrix();
   }
   private currentMatrix: string[][];
