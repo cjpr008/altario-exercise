@@ -127,12 +127,10 @@ export default {
 
     async sendInput(event) {
       const isAlphabetical = this.checkIfIsAlphabetical(event.key, event.keyCode);
-      console.log('isAlphabetical', isAlphabetical);
       const isBackspace = this.checkIfIsBackspace(event.keyCode);
       if (!isAlphabetical && !isBackspace) {
         return;
       }
-      console.log('!isBackspace && !this.inputTextAlreadyWasFilled', !isBackspace, !this.inputTextAlreadyWasFilled);
       if (!isBackspace && !this.inputTextAlreadyWasFilled) {
         this.isSending = true;
       }
